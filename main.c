@@ -639,9 +639,6 @@ void cmd_rnd(ctx_t *ctx) {
     print_range_mask(ctx->range_e, ctx->ord_size, ctx->ord_offs, ctx->use_color);
     ctx_print_status(ctx);
 
-    // if full range is used, skip break after first iteration
-    bool is_full = fe_cmp(ctx->range_s, range_s) == 0 && fe_cmp(ctx->range_e, range_e) == 0;
-
     for (size_t i = 0; i < ctx->threads_count; ++i) {
       pthread_create(&ctx->threads[i], NULL, cmd_add_worker, ctx);
     }
@@ -654,8 +651,6 @@ void cmd_rnd(ctx_t *ctx) {
     double dt = MAX((tsnow() - s_time), 1ul) / 1000.0;
     term_clear_line();
     printf("%'zu / %'zu ~ %.1fs\n\n", df, dc, dt);
-
-    if (is_full) break;
   }
 
   ctx_finish(ctx);
