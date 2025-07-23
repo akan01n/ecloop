@@ -1,6 +1,6 @@
 .PHONY: default clean build bench fmt add mul rnd blf remote
 
-CC = cc
+CC = clang
 CC_FLAGS ?= -O3 -ffast-math -Wall -Wextra
 
 ifeq ($(shell uname -m),x86_64)
